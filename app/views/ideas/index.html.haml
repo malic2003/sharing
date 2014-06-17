@@ -1,0 +1,23 @@
+%h1= @title
+
+%table.table.table-hover.table-striped
+  %tr
+    %th Title
+    - if controller.action_name == 'all'
+      %th Content
+    %th
+  - @ideas.each do |idea|
+    %tr
+      %td= idea.title
+      - if controller.action_name == 'all'
+        %td= idea.content
+      %td
+        - if can? :destroy, idea
+          = link_to '<i class="icon-trash"></i>'.html_safe, idea, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger pull-right action-destroy'
+        - if can? :update, idea   
+          = link_to '<i class="icon-edit"></i>'.html_safe, edit_idea_path(idea), class: 'btn pull-right action-edit', style: 'margin-right: 5px'
+
+  
+%br
+
+= link_to 'Share a new one', new_idea_path

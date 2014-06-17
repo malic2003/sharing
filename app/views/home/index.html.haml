@@ -1,0 +1,51 @@
+.jumbotron
+  %i.icon-lightbulb.icon-large.idea
+  
+  %h2 Do you have an idea ?
+  %h1 Share it with us !
+
+  - if current_user
+    %a.btn.btn-large.btn-info{ href: new_idea_path }
+      %i.icon-lightbulb.icon-2x.pull-left
+        New idea
+
+    %a.btn.btn-large.btn-success{ href: ideas_path }
+      %i.icon-list.icon-2x.pull-left
+        My ideas
+
+  - else 
+    %a.btn.btn-large.btn-alpha{ href: new_user_session_path }
+      %i.icon-signin.icon-2x.pull-left
+        Sign In
+
+    %a.btn.btn-large.btn-lightbulb{ href: new_user_registration_path }
+      %i.icon-user.icon-2x.pull-left
+        Sign Up
+
+  - if @recent_ideas.any?
+    .hrd
+
+
+    %h2 Recent ideas
+
+    %ul.recent-ideas.icons
+      - @recent_ideas.each do |idea|
+        %li
+          %i.icon-lightbulb
+          = "« " + truncate(idea.content, length: 50) + " »"
+          by
+          = idea.title
+
+      %li 
+        =link_to "Show all",  all_ideas_path
+
+    - if Idea.tag_counts.any?
+      .hrd
+      %h2 
+        Tag
+        %i.icon-cloud.icon-2x
+
+      #tag_cloud
+        - tag_cloud Idea.tag_counts, %w[s m l] do |tag, css_class|
+          = link_to tag.name, tag_path(tag.name), class: css_class
+

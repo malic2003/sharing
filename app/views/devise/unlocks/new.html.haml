@@ -1,0 +1,11 @@
+%h2
+  Resend unlock instructions
+= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, class:"form-horizontal" }) do |f|
+  = devise_error_messages!
+  %div.control-group
+    = f.label :email, class:"control-label"
+    %div.comtrols
+      = f.email_field :email, :autofocus => true
+    %div.control-group
+      %div.controls
+        = f.submit "Resend unlock instructions", class:"btn"

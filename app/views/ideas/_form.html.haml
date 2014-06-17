@@ -1,0 +1,55 @@
+%h1 Take a moment to write down your idea
+%hr
+
+= form_for(@idea) do |f|
+  = error_messages! :idea
+
+
+  .field
+    = "Area in which the idea will take effect"
+    %br
+    = f.check_box :innovation, class: "checkbox"
+    = t(".Innovation")
+    %br
+    = f.check_box :performance, class: "checkbox"
+    = t(".Performance")
+    %br
+    = f.check_box :culture, class: "checkbox"
+    = t(".Culture")
+
+
+  .field
+    %br
+    = f.label :title, "Idea's title"
+    = f.text_field :title, class: 'input-xlarge select2', style: 'width:300px'
+  
+  .field
+    = f.label :content, "Content"
+    = f.text_area :content, rows: 7
+
+  .field
+    = f.label :cost, "Idea's cost"
+    = f.text_field :cost, class: 'input-xlarge select2', style: 'width:300px'
+    
+  .field
+    = f.label :time, "Idea's time"
+    = f.text_field :time, class: 'input-xlarge select2', style: 'width:300px'
+
+  .field
+    = f.label :benefits, "Idea's benefits"
+    = f.text_field :benefits, class: 'input-xlarge select2', style: 'width:300px'
+
+  .field
+    = f.label :users, "Contributors (Hold ctrl to multiple select)" 
+    = select_tag "organizing_team", options_from_collection_for_select(@list_users, 'id', 'email'), :multiple => true
+
+  %br
+  .actions
+    = f.submit "Submit", class: 'btn btn-primary'
+
+
+- content_for :scripts do
+  :javascript
+    $(".select2").select2({
+      tags: #{all_tags.map(&:name)}
+    });
